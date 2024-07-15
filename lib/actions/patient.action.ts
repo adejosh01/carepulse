@@ -1,6 +1,7 @@
 "use server";
 
-import { ID, InputFile, Query } from "node-appwrite";
+import { ID,  Query } from "node-appwrite";
+import {InputFile} from "node-appwrite/file"
 
 import {
   BUCKET_ID,
@@ -65,7 +66,7 @@ export const registerPatient = async ({
     if (identificationDocument) {
       const inputFile =
         identificationDocument &&
-        InputFile.fromBlob(
+        InputFile.fromBuffer(
           identificationDocument?.get("blobFile") as Blob,
           identificationDocument?.get("fileName") as string
         );
@@ -102,11 +103,18 @@ export const getPatient = async (userId: string) => {
       [Query.equal("userId", [userId])]
     );
 
-    return parseStringify(patients.documents[0]);
+    // Check if any documents are returned
+    if (patients.documents.length > 0) {
+      return parseStringify(patients.documents[0]);
+    } else {
+      console.warn(`No patient found for userId: ${userId}`);
+      return null; // or handle this case as appropriate
+    }
   } catch (error) {
     console.error(
       "An error occurred while retrieving the patient details:",
       error
     );
+    return null; // Ensure the function returns a value
   }
 };

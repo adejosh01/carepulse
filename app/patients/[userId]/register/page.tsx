@@ -8,6 +8,7 @@ import { getPatient, getUser } from "../../../../lib/actions/patient.action";
 
 const Register = async ({ params: { userId } }: SearchParamProps) => {
     const user = await getUser(userId);
+    console.log(user)
   const patient = await getPatient(userId);
 
     if (patient) redirect(`/patients/${userId}/new-appointment`);
@@ -16,7 +17,7 @@ const Register = async ({ params: { userId } }: SearchParamProps) => {
             <section className="remove-scrollbar container">
                 <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
                     <Image
-                        src="/assets/icons/logo-full.png"
+                        src="/assets/icons/logo-full.svg"
                         height={1000}
                         width={1000}
                         alt="patient"
