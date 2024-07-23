@@ -1,3 +1,4 @@
+
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -16,7 +17,7 @@ import {
   GenderOptions,
   IdentificationTypes,
   PatientFormDefaultValues,
-} from "../../constants";
+} from "@/constants";
 import { registerPatient } from "../../lib/actions/patient.action";
 import { PatientFormValidation } from "@/lib/validation";
 
@@ -86,7 +87,6 @@ const RegisterForm = ({ user }: { user: User }) => {
       };
 
       const newPatient = await registerPatient(patient);
-      console.log(newPatient)
 
       if (newPatient) {
         router.push(`/patients/${user.$id}/new-appointment`);
